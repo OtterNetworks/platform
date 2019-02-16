@@ -12,6 +12,7 @@ steps:
       - cf_export HOST="${{CF_BRANCH_TAG_NORMALIZED}}.${{CF_REPO_NAME}}.$TLD"
       - cf_export NAMESPACE="${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_REPO_NAME}}"
       - cf_export PG_INSTANCE="otters-cc:europe-west1:otter-platform-staging"
+      - cf_export K8S_CLUSTER="standard-cluster-1@otters-cc"
   
   # It's often very useful to see what vars are available in the build environment
   SeeThemVars:
