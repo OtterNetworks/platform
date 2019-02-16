@@ -51,7 +51,7 @@ steps:
     title: Copy secrets from default namespace
     image: codefresh/cf-deploy-kubernetes
     commands:
-      - kubectl config use-context cluster-fuck@DovuProd
+      - kubectl config use-context $K8S_CLUSTER
       - bash -c 'kubectl get secret cloudsql-instance-credentials --export -o yaml | kubectl apply --namespace=${{NAMESPACE}} -f -'
       - bash -c 'kubectl get secret pg-credentials --export -o yaml | kubectl apply --namespace=${{NAMESPACE}} -f -'
 
