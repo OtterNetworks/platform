@@ -4,7 +4,7 @@ import os
 import psycopg2
 
 database_env = {
-	"user": os.environ['PG_USER'],
+	"user": os.environ['PG_USERNAME'],
 	"password": os.environ['PG_PASSWORD'],
 	"host": os.environ['PG_HOST'],
 	"database": os.environ['PG_DATABASE']
