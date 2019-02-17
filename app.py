@@ -3,12 +3,16 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 import psycopg2
 
+print(os.environ)
+print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 database_env = {
     "user": os.environ['PG_USERNAME'],
     "password": os.environ['PG_PASSWORD'],
     "host": os.environ['PG_HOST'],
     "database": os.environ['PG_DATABASE']
 }
+
+print(database_env)
 
 # Create database
 con = psycopg2.connect(user=database_env["user"], 
