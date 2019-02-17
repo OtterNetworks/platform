@@ -9,10 +9,10 @@ steps:
     image: alpine:latest
     commands:
       - cf_export BUILD_IMAGE="gcr.io/$GOOGLE_PROJECT/${{CF_REPO_NAME}}:${{CF_SHORT_REVISION}}"
-      - cf_export HOST="${{CF_BRANCH_TAG_NORMALIZED}}.${{CF_REPO_NAME}}.$TLD"
-      - cf_export NAMESPACE="${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_REPO_NAME}}"
-      - cf_export PG_INSTANCE="otters-cc:europe-west1:otter-platform-staging"
+      - cf_export HOST="${{CF_BRANCH_TAG_NORMALIZED}}-platform.$TLD"
+      - cf_export NAMESPACE="${{CF_BRANCH_TAG_NORMALIZED}}-platform"
       - cf_export K8S_CLUSTER="standard-cluster-1@otters-cc"
+      - cf_export PG_INSTANCE="otters-cc:europe-west1:otter-platform-staging"
   
   # It's often very useful to see what vars are available in the build environment
   SeeThemVars:
