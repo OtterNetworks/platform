@@ -3,8 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 import psycopg2
 
-print(os.environ)
-print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 database_env = {
     "user": os.environ['PG_USERNAME'],
     "password": os.environ['PG_PASSWORD'],
@@ -12,24 +10,12 @@ database_env = {
     "database": os.environ['PG_DATABASE']
 }
 
-print(database_env)
-
-# Create database
-con = psycopg2.connect(dbname='postgres',
-	                   user=database_env["user"], 
-                       host=database_env["host"],
-                       password=database_env["password"])
-con.autocommit = True
-cur = con.cursor()
-try:
-    cur.execute('CREATE DATABASE {};'.format(database_env["database"]))
-except:
-	print("Database {} already exists".format(database_env["database"]))
-
 DB_URL = 'postgresql+psycopg2://{user}:{password}@{host}/{database}'.format(**database_env)
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 db = SQLAlchemy(app)
+db.create_all()
+app.run()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -50,8 +36,5 @@ def hello(username):
 def healthz():
     return 'OK'
 
-if __name__ == "__main__":
-    db.create_all()
-    app.run()
 
 
