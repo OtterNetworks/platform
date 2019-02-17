@@ -15,7 +15,8 @@ database_env = {
 print(database_env)
 
 # Create database
-con = psycopg2.connect(user=database_env["user"], 
+con = psycopg2.connect(dbname='postgres',
+	                   user=database_env["user"], 
                        host=database_env["host"],
                        password=database_env["password"])
 con.autocommit = True
