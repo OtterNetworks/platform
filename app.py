@@ -15,7 +15,6 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 db = SQLAlchemy(app)
 db.create_all()
-app.run()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -35,6 +34,9 @@ def hello(username):
 @app.route("/healthz")
 def healthz():
     return 'OK'
+
+if __name__ == "__main__":
+    app.run()
 
 
 
