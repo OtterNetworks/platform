@@ -1,8 +1,10 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_cors import CORS
 import os
 import psycopg2
+import json
 
 database_env = {
     "user": os.environ['PG_USERNAME'],
@@ -16,6 +18,7 @@ DB_URL = 'postgresql+psycopg2://{user}:{password}@{host}/{database}'.format(**da
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 db = SQLAlchemy(app)
+CORS(app)
 migrate = Migrate(app, db)
 
 class User(db.Model):
@@ -26,12 +29,18 @@ class User(db.Model):
         return '<User %r>' % self.username
 
 @app.route("/api/user/<username>")
-def hello(username):
+def user(username):
     admin = User(username=username, email=username + '@meowtron.com')
     db.session.add(admin)
     db.session.commit()
     print(User.query.all())
     return 'OK'
+
+@app.route("/api/test")
+def test():
+    with open('fake.json') as f:
+        data = json.load(f)
+    return json.dumps(data)
 
 @app.route("/healthz")
 def healthz():
