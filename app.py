@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 import os
 import psycopg2
 
@@ -10,13 +11,12 @@ database_env = {
     "database": os.environ['PG_DATABASE']
 }
 
+print("THIS IS THE ROOT")
 DB_URL = 'postgresql+psycopg2://{user}:{password}@{host}/{database}'.format(**database_env)
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 db = SQLAlchemy(app)
-print("CREATING THE DATABASE SCHEMA NOW")
-db.create_all()
-print("DATABASE SCHEMA HAS BEEN CREATED")
+migrate = Migrate(app, db)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -38,7 +38,9 @@ def healthz():
     return 'OK'
 
 if __name__ == "__main__":
+    print("THIS IS THE __MAIN__")
     app.run()
+    
 
 
 
