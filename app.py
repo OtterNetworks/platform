@@ -14,7 +14,9 @@ DB_URL = 'postgresql+psycopg2://{user}:{password}@{host}/{database}'.format(**da
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 db = SQLAlchemy(app)
+print("CREATING THE DATABASE SCHEMA NOW")
 db.create_all()
+print("DATABASE SCHEMA HAS BEEN CREATED")
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
