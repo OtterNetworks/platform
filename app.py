@@ -10,6 +10,16 @@ database_env = {
     "database": os.environ['PG_DATABASE']
 }
 
+# Create database
+con = psycopg2.connect(user=database_env["user"], 
+                       host=database_env["host"],
+                       password=database_env["password"])
+con.autocommit = True
+cur = con.cursor()
+try:
+    cur.execute('CREATE DATABASE {};'.format(database_env["database"]))
+except:
+	print("Database {} already exists".format(database_env["database"]))
 
 DB_URL = 'postgresql+psycopg2://{user}:{password}@{host}/{database}'.format(**database_env)
 app = Flask(__name__)
