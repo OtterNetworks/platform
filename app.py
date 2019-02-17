@@ -2,8 +2,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
 import psycopg2
-import jsonify
-import pprint
 
 database_env = {
     "user": os.environ['PG_USERNAME'],
