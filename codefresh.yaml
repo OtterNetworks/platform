@@ -78,7 +78,7 @@ steps:
     cluster: ${{K8S_CLUSTER}}
     namespace: ${{NAMESPACE}}
     file_path: ./k8s/service.yaml
-          
+
   RunningIngressScript:
     title: Running Ingress
     type: deploy
