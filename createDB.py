@@ -16,8 +16,9 @@ con = psycopg2.connect(dbname='postgres',
 
 con.autocommit = True
 cur = con.cursor()
-cur.execute('CREATE DATABASE "{}";'.format(database_env["database"]))
-#try:
-#    cur.execute('CREATE DATABASE {};'.format(database_env["database"]))
-#except:
-#    print("Database {} probably already exists".format(database_env["database"]))
+#cur.execute('CREATE DATABASE "{}";'.format(database_env["database"]))
+try:
+    cur.execute('CREATE DATABASE {};'.format(database_env["database"]))
+except psycopg2.ProgrammingError, e:
+    print("Database {} probably already exists".format(database_env["database"]))
+    pass
