@@ -21,4 +21,5 @@ try:
     cur.execute('CREATE DATABASE {};'.format(database_env["database"]))
 except psycopg2.ProgrammingError as e:
     print("Database {} probably already exists".format(database_env["database"]))
+    print(e)
     pass
