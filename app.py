@@ -1,10 +1,14 @@
-from flask import Flask
+from flask import Flask, request, Response
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
 import os
 import psycopg2
 import json
+
+from services import ItemService
+from infrastructure.exceptions import InvalidModel
+from db import Session
 
 database_env = {
     "user": os.environ['PG_USERNAME'],
@@ -41,6 +45,37 @@ def test():
     with open('fake.json') as f:
         data = json.load(f)
     return json.dumps(data)
+
+@app.route("/items", methods=["POST"])
+def add_item():
+    session = Session()
+    service = ItemService(session)
+
+    # request_data = json.loads(request.data)
+    print(request.json)
+    item_params = {
+        'name': request.json['name'],
+        'status': request.json['status'],
+        'type': request.json['type']
+    }
+
+    item = None
+    try:
+        item = service.save(item_params)
+    except InvalidModel as e:
+        return Response(data=json.dumps(e.errors), status=400)
+    
+    json_response = json.dumps({
+        'id': item.attrs['id'],
+        'name': item.attrs['name'],
+        'status': item.attrs['status'],
+        'type': item.attrs['type']
+    })
+
+    session.commit()
+    session.close()
+    return Response(json_response, status=201)
+    
 
 @app.route("/healthz")
 def healthz():

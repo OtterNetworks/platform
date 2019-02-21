@@ -1,0 +1,14 @@
+.env
+data/
+.pytest_cache/
+**/__pycache__/
+.vscode/*
+
+*.py[cod]
+*~
+/venv/*
+/.idea/*
+.vscode
+
+*.retry
+movie.json
