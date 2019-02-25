@@ -46,7 +46,7 @@ def test():
         data = json.load(f)
     return json.dumps(data)
 
-@app.route("/items", methods=["POST"])
+@app.route("/api/items", methods=["POST"])
 def add_item():
     session = Session()
     service = ItemService(session)
