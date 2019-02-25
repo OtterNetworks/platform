@@ -51,8 +51,6 @@ def add_item():
     session = Session()
     service = ItemService(session)
 
-    # request_data = json.loads(request.data)
-    print(request.json)
     item_params = {
         'name': request.json['name'],
         'status': request.json['status'],
@@ -85,6 +83,3 @@ if __name__ == "__main__":
     print("THIS IS THE __MAIN__")
     app.run()
     
-
-
-
