@@ -9,4 +9,13 @@ class Item(BaseModel):
 
   def to_db_record(self):
     return ItemRecord(**self.attrs)
+
+  def from_db_record(self, record):
+    attrs = {
+      'id': record.id,
+      'name': record.name,
+      'status': record.status,
+      'type': 'type'
+    }
+    return Item(self, attrs)
     

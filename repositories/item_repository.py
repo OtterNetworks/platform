@@ -12,9 +12,9 @@ class ItemRepository:
   def delete(self, id):
     self.session.query(ItemRecord).filter_by(id=id).delete()
 
-  def find_single_by(self, **args):
+  def find_single_by(self, **params):
     try:
-        item = self.session.query(ItemRecord).filter_by(**args).one()
+        item = self.session.query(ItemRecord).filter_by(**params).one()
     except NoResultFound:
         return None
     return item

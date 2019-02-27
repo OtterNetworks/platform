@@ -12,7 +12,7 @@ class ItemService:
     item = self.repository.find_single_by(name=params['name'])
 
     if item is not None:
-      raise ModelConflict(item)
+      raise ModelConflict(Item.from_db_record(item))
 
     item = Item(params)
 
@@ -24,3 +24,4 @@ class ItemService:
     self.session.flush()
     item.attrs['id'] = db_record.id
     return item
+
