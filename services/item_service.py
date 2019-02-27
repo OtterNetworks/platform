@@ -1,5 +1,5 @@
 from models import Item
-from infrastructure.exceptions import InvalidModel
+from infrastructure.exceptions import InvalidModel, ModelConflict
 from repositories import ItemRepository
 
 
@@ -9,6 +9,11 @@ class ItemService:
     self.repository = ItemRepository(self.session)
 
   def save(self, params):
+    item = self.repository.find_single_by(name=params['name'])
+
+    if item is not None:
+      raise ModelConflict(item)
+
     item = Item(params)
 
     if item.is_invalid():

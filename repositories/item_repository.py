@@ -9,12 +9,12 @@ class ItemRepository:
   def save(self, item):
     self.session.add(item)
 
-  def get_by_id(self, id):
-    try:
-        case = self.session.query(ItemRecord).filter_by(id=id).one()
-    except NoResultFound:
-        return None
-    return case
-
   def delete(self, id):
     self.session.query(ItemRecord).filter_by(id=id).delete()
+
+  def find_single_by(self, **args):
+    try:
+        item = self.session.query(ItemRecord).filter_by(**args).one()
+    except NoResultFound:
+        return None
+    return item

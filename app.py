@@ -7,7 +7,7 @@ import psycopg2
 import json
 
 from services import ItemService
-from infrastructure.exceptions import InvalidModel
+from infrastructure.exceptions import InvalidModel, ModelConflict
 from db import Session
 
 database_env = {
@@ -58,10 +58,14 @@ def add_item():
     }
 
     item = None
+    status = 201
     try:
         item = service.save(item_params)
     except InvalidModel as e:
         return Response(data=json.dumps(e.errors), status=400)
+    except ModelConflict as e:
+        item = e.model
+        status = 409
     
     json_response = json.dumps({
         'id': item.attrs['id'],
@@ -72,7 +76,7 @@ def add_item():
 
     session.commit()
     session.close()
-    return Response(json_response, status=201)
+    return Response(json_response, status=status)
     
 
 @app.route("/healthz")
