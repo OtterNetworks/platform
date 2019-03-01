@@ -71,7 +71,7 @@ def add_item():
     session.close()
     return Response(json_response, status=status)
 
-@app.route('/api/users', methods=['POST'])
+@app.route('/api/auth', methods=['POST'])
 def authenticate():
     return ''
     
