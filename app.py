@@ -70,6 +70,10 @@ def add_item():
     session.commit()
     session.close()
     return Response(json_response, status=status)
+
+@app.route('/api/users', method=['POST'])
+def authenticate():
+    return ''
     
 
 @app.route("/healthz")
